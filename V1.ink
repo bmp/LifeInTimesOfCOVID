@@ -66,7 +66,7 @@ Given the upheaval in the country, a few of your funders have decided to divert 
 
 * [Change your organisations focus to COVID] -> pivot
 
-* [Continue working as usual and add new COVID-focussed projects] -> manage
+* [Continue working as usual and add new COVID-focused projects] -> manage
 
 === pivot ===
 ~COVIDWorkstatus=1
@@ -95,6 +95,8 @@ You have made a brave and tricky choice for the organisation.
 ~sanity=sanity*0.9
 
 You are trying to ensure that you can manage your existing projects and help out with COVID related work as much as possible. While this seems to be the right choice, it is affecting your health and the organisation's focus and health.
+
+All the best!
 
 * [Next] -> scenarios
 
@@ -293,14 +295,16 @@ COVID {&has affected you personally, and you are out of action for 3 weeks.|has 
 ~fundsfororg=fundsfororg-10
 ~sanity= sanity*0.8
 You and your team are working overtime to ensure the deliverables can be met and do justice to the COVID work. 
-* [Next] -> scenarios
+* [Next] 
+Sure, lets try another -> scenarios
 
 = extentsionapproved
 ~ego=ego*1.1
 ~fundsfororg=fundsfororg-10
 ~sanity= sanity*1.1
 Since your funder understands the challenges that have resulted due to COVID all around, they extend your deadlines based on your request and ask you and your team to take care and be prepared for a long battle.
-*[Next]-> scenarios
+*[Next]
+Sure, lets try another-> scenarios
 
 = foreignfunder
 {fcrastatus:
@@ -308,18 +312,19 @@ Since your funder understands the challenges that have resulted due to COVID all
 ~fundsfororg=fundsfororg+10
 ~sanity=sanity*1.1
 ~ego=ego*1.1
-- 0: 
+- 0: Since you do not have clearance to receive funding from outside India by the Government, you cannot carry out this work.
 ~sanity=sanity*0.9
 ~ego=ego*0.9
-Since you do not have clearance to receive funding from outside India by the Government, you cannot carry out this work.
 }
-* [Next] -> scenarios
+* [Next] 
+Sure, lets try another-> scenarios
 
 = indianfunder
 ~fundsfororg=fundsfororg+10
 ~sanity=sanity+10
 Congratulations! You have received fundingg to continue the COVID related work from a {&philanthropic body.|an individual funder.}
-* [Next] -> scenarios
+* [Next] 
+Sure, lets try another-> scenarios
 
 === ending ===
 # CLEAR
@@ -339,12 +344,12 @@ For the journey never ends!
 * [Debug] -> debug
 
 === debug ===
-End state values:
-Health= {health}
-Mental health= {sanity}
-Pride= {ego}
-Organisation funds= {fundsfororg}
+# CLEAR
+End state values: 
+Health= {health} 
+Mental health= {sanity} 
+Pride= {ego} 
+Organisation funds= {fundsfororg} 
 Scenarios run= {counter} 
-
 
 -> END

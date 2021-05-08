@@ -135,7 +135,9 @@ strong {
 img {
     display: block;
     margin: 0 auto;
-    max-width: 100%;
+    max-width: 50%;
+    height: auto;
+    border-radius: 8px;
 }
 
 .container .hide {
@@ -263,4 +265,8 @@ body.dark {
 
 .dark #controls {
     background: black;
+}
+
+.debug {
+ colour: red;
 }
