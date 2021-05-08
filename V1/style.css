@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,700|Quattrocento:700');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Open+Sans&family=Playfair+Display:italic,wght@0,400;400;600;700&&display=swap');
 
 body {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: lighter;
+    font-family: 'EB Garamond', serif;
+    /*font-weight: lighter;*/
     background: white;
     overflow: hidden;
 }
@@ -14,7 +14,7 @@ body.switched {
 h1,
 h2 {
     text-align: center;
-    font-family: "Quattrocento", Georgia, 'Times New Roman', Times, serif;
+    font-family: "Playfair Display", Georgia, 'Times New Roman', Times, serif;
     margin: 0;
     padding: 0;
 }
@@ -27,8 +27,8 @@ h1 {
 h2 {
     font-size: 14pt;
     font-style: italic;
-    font-family: sans-serif;
-    font-weight: lighter;
+    font-family: serif;
+    //font-weight: lighter;
     color: #BBB;
 }
 
@@ -46,6 +46,7 @@ h2 {
 }
 
 .written-in-ink {
+/*  
     z-index: 3;
     font-size: 9pt;
     font-family: sans-serif;
@@ -61,6 +62,8 @@ h2 {
     padding-bottom: 6px;
     height: 14px;
     top: 0;
+*/
+    display: none;
 }
 
 /* 
@@ -114,7 +117,7 @@ p {
 a {
     font-weight: 700;
     color: #b97c2c;
-    font-family: sans-serif;
+    font-family: serif;
     transition: color 0.6s;
     text-decoration: none;
 }
@@ -194,6 +197,7 @@ img {
     user-select: none;
     background: white;
     transition: color 0.6s, background 0.6s;
+    font-family: 'Open Sans', sans-serif;
 }
 
 #controls [disabled] {
