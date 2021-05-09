@@ -151,9 +151,7 @@ You lose hope, your feel your work has no impact or change on the world around y
 * [End] -> ending
 
 === shutdownbychoice ===
-The world has gone to hell, but who cares? :-)
-
-Congratulations, you have decided that {org_name} will shut down.
+You have decided that {org_name} will shut down.
     {
     - health>80: You are healthy and ready for new battles!
     - health<=80 && health>60: You are relatively healthy.
@@ -186,11 +184,6 @@ Congratulations, you have decided that {org_name} will shut down.
  - ego <= 10: -> moraleshutdown
  - sanity <= 10: ->moraleshutdown
 }
-
--> scenariogen
-
-
-=== scenariogen ===
 ~ temp scenario_picker = RANDOM(1, 8) 
 
 {scenario_picker:
@@ -210,7 +203,11 @@ Congratulations, you have decided that {org_name} will shut down.
 {
  - health <= 5: -> healthshutdown
 }
-Since you have decided to continue with your existing projects and work on COVID related projects, your current work has suffered. You need to request your funders for a no-cost extension, and your funder {~approves your request.->extentsionapproved|denies your request.->extensiondenied}
+{COVIDWorkstatus:
+- 0: You have decided to continue with your existing projects. However, you realise your funding options are becoming smaller and your peers are raising large amounts of funding for their COVID related work. ->scenarios
+- 1: Your existing funders are not happy with your choice, but they understand the reasons that have forced your hand.->scenarios
+- 2: Since you have decided to continue with your existing projects and work on COVID related projects, your current work has suffered. You need to request your funders for a no-cost extension, and your funder {~approves your request.->extentsionapproved|denies your request.->extensiondenied}
+}
 
 === unpaidCOVIDwork === 
 Your {&partner organisation|previous funder|project funder|former colleague|family member|government partner|partner organisation}  reaches out to you, they need your support. There is an urgent need to address a COVID related emergency. Do you wish to take up this short unpaid assignment?
@@ -236,7 +233,6 @@ Your {&partner organisation|previous funder|project funder|former colleague|fami
     }
     Though it was tricky, this might turn out to be a wise choice. -> scenarios
 
-
 === paidCOVIDwork === 
 {COVIDWorkstatus:
 - 1:
@@ -246,48 +242,59 @@ Your {&partner organisation|previous funder|project funder|former colleague|fami
  -0:
     ~fundsfororg=fundsfororg-10
     Since you decided not to work on COVID related projects, you are ineligible for these grants.
-    * [Next] And we soldier on! One firefight to another: -> scenarios
 - 2:
     ~ego=ego*1.1
     ~health=health*0.8
     ~sanity=sanity*0.9
-    You stumble upon an avenue wherein you are offered a short term contract to provide COVID relief. Since you had decided to work on projects related to COVID, you are contacted by {&a foreign funder.->foreignfunder|an Indian funder.->indianfunder}
+  As you had decided to do both COVID relief and existing work, you have sent out a number of requests to people you know. Luckily, you are contacted by {&a foreign funder.->foreignfunder|an Indian funder.->indianfunder}
 }
+* [And we soldier on! One firefight to another:] -> scenarios
+* [No, I am tired] -> shutdownbychoice
 
 === crowdfundedCOVIDrelief === 
-Your {partner organisation|previous funder|former colleague|family member|government partner}  reach out to you, they need your support. However, they do not have funding and wish to begin a crowdfunding campaign for this work. You agree and work with them to launch the campaign and begin work. 
+Your {&partner organisation|previous funder|former colleague|family member|government partner}  reach out to you, they need your support. However, they do not have funding and wish to begin a crowdfunding campaign for this work. You agree and work with them to launch the campaign and begin work. 
 ~ temp chance = RANDOM(1, 3)
 {chance:
 - 1: 
     ~fundsfororg=fundsfororg+10
     ~sanity=sanity*1.1
     ~ego=ego*1.1
-    Congratulations! The campaign was a success and you receive the funding required.->scenarios
+    Congratulations! The campaign was a success and you receive the funding required.
+    * [And we soldier on! One firefight to another:] -> scenarios
+    * [No, I am tired] -> shutdownbychoice
 - 2: 
     ~fundsfororg=fundsfororg-5
     ~sanity=sanity*0.9
     ~ego=ego*0.9
-    Unfortunately, the campaign was only partially successful. You had to spend the organisations resources to complete the project.->scenarios
+    Unfortunately, the campaign was only partially successful. You had to spend the organisations resources to complete the project.
+    * [And we soldier on! One firefight to another:] -> scenarios
+    * [No, I am tired] -> shutdownbychoice
 - 3: 
     ~fundsfororg=fundsfororg-10
     ~sanity=sanity*0.8
     ~ego=ego*0.8
-    This campaign was a total failure and you have not been able to help your partner and your existing projects have suffered. -> scenarios
+    This campaign was a total failure and you have not been able to help your partner and your existing projects have suffered. 
+    * [And we soldier on! One firefight to another:] -> scenarios
+    * [No, I am tired] -> shutdownbychoice
 }
-
 
 === newgrantopportunity === 
 {
 - sanity <=60:
     ~fundsfororg = fundsfororg*0.9
     ~ego = ego*0.9
-    You and the organisation are close to burning out and not being able to produce good quality work. -> scenarios
+    You and the organisation are close to burning out and not being able to produce good quality work.
+    * [And we soldier on! One firefight to another:] -> scenarios
+    * [No, I am tired] -> shutdownbychoice
 - else:
     ~fundsfororg = fundsfororg+10
     ~sanity = sanity*1.1
     ~ego = ego*1.1
-    Due to the availability of a new project grant, your team and you are excited about this opportunity during these harsh and strange times. You apply to the grant and are excited to know that your proposal has been approved. ->scenarios
+    Due to the availability of a new project grant, your team and you are excited about this opportunity during these harsh and strange times. You apply to the grant and are excited to know that your proposal has been approved. 
+    * [And we soldier on! One firefight to another:] -> scenarios
+    * [No, I am tired] -> shutdownbychoice
 }
+
 
 
 === teammemberfallssick === 
@@ -295,20 +302,27 @@ Your {partner organisation|previous funder|former colleague|family member|govern
 ~sanity=sanity*0.8
 ~ego=ego*0.8
 ~health=health*0.7
-COVID {&has affected you personally, you have tested positive and you are out of action for 3 weeks.|has affected your organisation, your colleague has tested positive and is in isolation for 2 weeks. They cannot work for the next one month due to complications|has affected you personally, and cannot work for the next month.} {org_name} pays a heavy price for this as there is limited bandwidth available from the team.-> scenarios
+COVID {&has affected you personally, you have tested positive and you are out of action for 3 weeks.|has affected your organisation, your colleague has tested positive and is in isolation for 2 weeks. They cannot work for the next one month due to complications.|has affected you personally, and cannot work for the next month.|has struck your organistion, multiple people are infected in your team, you need to shut your offices, sanitize them and take care of your team members.} {org_name} pays a heavy price for this as there is limited bandwidth available from the team.
+
+* [Let me try and push this forward] -> scenarios
+* [No, I am tired of people falling sick around me!] -> shutdownbychoice
 
 === covidstoppage === 
 ~fundsfororg=fundsfororg-10
 ~sanity=sanity*0.8
 ~ego=ego*0.8
-Due to the raging pandemic, {&your fieldwork is suspended and you will have to wait for two months to begin work.|your project deliverables have to be change and you need to negotiate with your funder.|your project is suspended by the funder as they would like to prioritize COVID work.|your partner organisation is in stress and cannot contribute to the project.|your fieldwork is suspended and you will have to wait for two months to begin work.}
+Due to the raging pandemic, {&your fieldwork is suspended and you will have to wait for two months to begin work.|your project deliverables have to be changed and you need to negotiate with your funder.|your project is suspended by the funder as they would like to prioritize COVID work.|your partner organisation is in stress and cannot contribute to the project.|your fieldwork is suspended and you will have to wait for two months to begin work.}
+
 * [And we soldier on! One firefight to another:] -> scenarios
+* [No, I am tired of what is happening around me. I would like to retire.] -> shutdownbychoice
 
 === extensiondenied === 
 ~ego=ego*0.9
 ~fundsfororg=fundsfororg-10
 ~sanity= sanity*0.8
 You and your team are working overtime to ensure the deliverables can be met and do justice to the COVID work. 
+
+* [No, I am tired] -> shutdownbychoice
 * [And we soldier on! One firefight to another:] -> scenarios
 
 === extentsionapproved === 
@@ -317,6 +331,7 @@ You and your team are working overtime to ensure the deliverables can be met and
 ~sanity= sanity*1.1
 Since your funder understands the challenges that have resulted due to COVID all around, they extend your deadlines based on your request and ask you and your team to take care and be prepared for a long battle.
 * [And we soldier on! One firefight to another:] -> scenarios
+* [No, I am tired] -> shutdownbychoice
 
 === foreignfunder === 
 {fcrastatus:
@@ -324,19 +339,24 @@ Since your funder understands the challenges that have resulted due to COVID all
     ~fundsfororg=fundsfororg+10
     ~sanity=sanity*1.1
     ~ego=ego*1.1
-    Since you have the clearance from the Government of India, you can continue to carry out the COVID related work with this grant from outside India.-> scenarios
+    Since you have the clearance from the Government of India, you can continue to carry out the COVID related work with this grant from outside India.
+    * [And we soldier on! One firefight to another:] -> scenarios
+    * [No, I am tired] -> shutdownbychoice
 - 0: 
     ~sanity=sanity*0.9
     ~ego=ego*0.9
     Since you do not have clearance to receive funding from outside India by the Government, you cannot carry out this work.
-    -> scenarios
+    * [And we soldier on! One firefight to another:] -> scenarios
+    * [I think I need to shutdown] -> shutdownbychoice
 }
+
 
 === indianfunder === 
 ~fundsfororg=fundsfororg+10
 ~sanity=sanity+10
 Congratulations! You have received funding to continue the COVID related work from a {&philanthropic body.|an individual funder.} 
 * [And we soldier on! One firefight to another:] -> scenarios
+* [No, I am tired] -> shutdownbychoice
 
 === ending ===
 # CLEAR
