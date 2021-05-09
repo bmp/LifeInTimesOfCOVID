@@ -10,61 +10,62 @@ VAR counter=0
 
 May, 2021
 
-India has became the first country to record over 400,000 new cases in a single day, with continued loss if lives. The nation’s healthcare system is overwhelmed and has buckled. Stranded migrants are leaving cities en masse, and marginalized communities across India are enduring the effects of underplanning and unpreparedness on part of the government. The double marginalization resulting from poverty and lack of access has intensified the suffering of those farthest behind, and pushing even the middle-income groups into poverty. 
+India has become the first country to record over 400,000 new cases in a single day, with continued loss if lives. The nation’s healthcare system is overwhelmed and has buckled. Stranded migrants are leaving cities en masse, and marginalized communities across India are enduring the effects of under planning and unpreparedness on part of the government. The double marginalization resulting from poverty and lack of access has intensified the suffering of those farthest behind, and pushing even the middle-income groups into poverty.  
 + Would you like to address this problem?
 * Yes
 -> OrgDetails
 * No
-->ending
+-> ending
 
 === OrgDetails ===
- You lead an organisation in the development space in India and now need to take decisions to help those around you. Your work involves working with multiple stakeholders to make transformational change.->OrgName 
+ You lead an organisation in the development space in India and now need to take decisions to help those around you. Your work involves working with multiple stakeholders to make transformational change.-> OrgName 
 
 = OrgName
 What is your organisation's name?
 
 * Saviour
-  ~org_name="Saviour"
-  ->OrgSize
+    ~org_name="Saviour"
+    -> OrgSize
 * Enabler
- ~org_name="Enabler"
-   ->OrgSize
+    ~org_name="Enabler"
+    -> OrgSize
 * Solver
- ~org_name="Solver"
-   ->OrgSize
+    ~org_name="Solver"
+    -> OrgSize
 * Accelerator
- ~org_name="Accelerator"
-   ->OrgSize
+    ~org_name="Accelerator"
+    -> OrgSize
 * Catalyst
- ~org_name="Catalyst"
-   ->OrgSize
+    ~org_name="Catalyst"
+    -> OrgSize
 
 = OrgSize
-{org_name}'s work has been cited across the world and has received awards across the globe. There have been numerous reports in the media about your work. How many people do you have in your organisation?
+~fcrastatus=RANDOM(0,1)
+You have poured your heart and soul into {org_name}. {org_name}'s work has been cited across the world and has received many awards. There have been numerous reports in the media about your work. How many people do you have in your organisation?
 
 * 10
     ~emp_count = 10
-    ->DecisionTime
+    -> DecisionTime
 * 25
     ~emp_count = 25
-    ->DecisionTime
+    -> DecisionTime
 * 50
     ~emp_count = 50
-    ->DecisionTime
+    -> DecisionTime
 * 100
     ~emp_count = 100
-    ->DecisionTime
+    -> DecisionTime
 
 = DecisionTime
 {
  - fundsfororg <= 0: -> nofundsshutdown
 }
 
-Given the upheaval in the country, a few of your funders have decided to divert funding to help with the COVID sitatuation in the country. What would you like to do?
+Given the upheaval in the country, a few of your funders have decided to divert funding to help with the COVID situation in the country. What would you like to do?
 
 * [Shutdown] -> shutdownbychoice
 
-* [Change your organisations focus to COVID] -> pivot
+* [Change your organisation's focus to COVID] -> pivot
 
 * [Continue working as usual and add new COVID-focused projects] -> manage
 
@@ -81,7 +82,7 @@ You have made a brave and tricky choice for the organisation.
         Or have you? You were forced into a corner as you ran out of funding, and you are forced to take a hard, long look at yourself in the mirror. 
         {
         - ego > 60: You calm yourself down by thinking of the battles you've won, the change you've achieved and decide to soldier on.
-        - else: You don't like what you see. A bit of self-doubt creeps in, maybe you have not planned well? Are you letting your teammates down? Maybe everyone around you was right, and you shoould not have gone down this road? 
+        - else: -> moraleshutdown
         }
     }
 
@@ -89,7 +90,7 @@ You have made a brave and tricky choice for the organisation.
 * [Next] -> scenarios
 
 === manage ===
-~COVIDWorkstatus=1
+~COVIDWorkstatus=2
 ~ego=ego*1.1
 ~health=health*0.8
 ~sanity=sanity*0.9
@@ -102,16 +103,16 @@ All the best!
 
 === nofundsshutdown ===
 
-You do not have funding to continue the organisation! You have to find jobs for all your colleagues and wish them well for the future. Unfortunately, you are forced to shut down your organisation. 
+You do not have funding to continue the organisation! You have to find jobs for all your colleagues and wish them well for the future. Unfortunately, you are forced to shut your organisation down. 
 ~ego=ego*0.25
     {
-    - health>80: Healthy and ready for new battles!
-    - health<=80 && health>60: Relatively healthy.
-    -else: Tired and in need of a long rest and recuperation.
+    - health>80: You are healthy and ready for new battles!
+    - health<=80 && health>60: You make peace with yourself that you are relatively healthy in these times.
+    -else: You are tired and in need of a long rest and recuperation.
     }
     { 
-    -sanity>75:With your sanity intact! 
-    - else: Almost mad!
+    -sanity>75: You do not have to worry about your mental health! 
+    - else: You feel you have gone mad and world is burning around you!
     }
     {
     - ego > 80: And proud of your choices.
@@ -141,7 +142,7 @@ You continue to work yourself to the bone, this is unsustainable and the you hav
 
 === moraleshutdown ===
 
-You lose hope, your feel your work has no immpact or change on the world around you, and you've retired.
+You lose hope, your feel your work has no impact or change on the world around you, and you've retired.
     {
     - health>80: But you are healthy!
     - health<=80 && health>60: Only relatively healthy.
@@ -152,7 +153,7 @@ You lose hope, your feel your work has no immpact or change on the world around 
 === shutdownbychoice ===
 The world has gone to hell, but who cares? :-)
 
-Congratulations, you have decided that {org_name} has to shut down.
+Congratulations, you have decided that {org_name} will shut down.
     {
     - health>80: You are healthy and ready for new battles!
     - health<=80 && health>60: You are relatively healthy.
@@ -210,35 +211,45 @@ Since you have decided to continue with your existing projects and work on COVID
 = unpaidCOVIDwork
 Your {partner organisation|previous funder|project funder|former colleague|family member|government partner|partner organisation}  reaches out to you, they need your support. There is an urgent need to address a COVID related emergency. Do you wish to take up this short unpaid assignment?
 * Yes
-~health= health*0.9
-~sanity= sanity*0.9
-~ego=ego*1.1
-{
- - health <= 5: -> healthshutdown
-}
-~fundsfororg=fundsfororg-10
-{
- - fundsfororg <= 0: -> nofundsshutdown
-}
-{
-- sanity <= 10: -> moraleshutdown
-}
-Congratulations on taking up the offer and fighting the pandemic! ->scenarios
+    ~health= health*0.9
+    ~sanity= sanity*0.9
+    ~ego=ego*1.1
+    {
+     - health <= 5: -> healthshutdown
+    }
+    ~fundsfororg=fundsfororg-10
+    {
+    - fundsfororg <= 0: -> nofundsshutdown
+    }
+    {
+    - sanity <= 10: -> moraleshutdown
+    }
+    Congratulations on taking up the offer and fighting the pandemic!* [Next] 
+    And we soldier on! One firefight to another: ->scenarios
 * No
-~ego=ego*0.9
-{
-- ego <= 10: -> moraleshutdown
-}
-Though it was tricky, this might turn out to be a wise choice. ->scenarios
+    ~ego=ego*0.9
+    {
+    - ego <= 10: -> moraleshutdown
+    }
+    Though it was tricky, this might turn out to be a wise choice.* [Next] 
+    And we soldier on! One firefight to another: ->scenarios
 
 
 = paidCOVIDwork
-{
-    - COVIDWorkstatus==1:
+{COVIDWorkstatus:
+- 1:
+    ~ego=ego*0.9
+    ~health=health*0.9
     You stumble upon an avenue wherein you are offered a short term contract to provide COVID relief. Since you had decided to work on projects related to COVID, you are contacted by {&a foreign funder.->foreignfunder|an Indian funder.->indianfunder}
-    - else: 
-    Since you decided not to work on COVID related projects, you are ineligble for these grants.
-    * [Next] -> scenarios
+ -0:
+    ~fundsfororg=fundsfororg-10
+    Since you decided not to work on COVID related projects, you are ineligible for these grants.
+    * [Next] And we soldier on! One firefight to another: -> scenarios
+- 2:
+    ~ego=ego*1.1
+    ~health=health*0.8
+    ~sanity=sanity*0.9
+    You stumble upon an avenue wherein you are offered a short term contract to provide COVID relief. Since you had decided to work on projects related to COVID, you are contacted by {&a foreign funder.->foreignfunder|an Indian funder.->indianfunder}
 }
 
 = crowdfundedCOVIDrelief
@@ -249,18 +260,20 @@ Your {partner organisation|previous funder|former colleague|family member|govern
     ~fundsfororg=fundsfororg+10
     ~sanity=sanity*1.1
     ~ego=ego*1.1
-    Congratulations! The campaign was a success and you receive the funding required. -> scenarios
+    Congratulations! The campaign was a success and you receive the funding required.
 - 2: 
     ~fundsfororg=fundsfororg-5
     ~sanity=sanity*0.9
     ~ego=ego*0.9
-    Unfortunately, the capmaign was only partiall successful. You had to spend the organisations resources to complete the project. -> scenarios
+    Unfortunately, the campaign was only partially successful. You had to spend the organisations resources to complete the project.
 - 3: 
     ~fundsfororg=fundsfororg-10
     ~sanity=sanity*0.8
     ~ego=ego*0.8
-    This campaign was a total failure and you have not been able to help your partner and your existing projects have suffered. -> scenarios
+    This campaign was a total failure and you have not been able to help your partner and your existing projects have suffered.
 }
+* [Next] 
+And we soldier on! One firefight to another: -> scenarios
 
 
 = newgrantopportunity
@@ -268,35 +281,38 @@ Your {partner organisation|previous funder|former colleague|family member|govern
 - sanity <=60:
     ~fundsfororg=fundsfororg*0.9
     ~ego=ego*0.9
-    You and the organisation are close to bruning out and not being able to produce good quality work.-> scenarios
+    You and the organisation are close to burning out and not being able to produce good quality work.* [Next] 
+    And we soldier on! One firefight to another: -> scenarios
 - else:
     ~fundsfororg=fundsfororg+10
     ~sanity=sanity*1.1
     ~ego=ego*1.1
-    Due to the availablity of a new project grant, your team and you are excited about this during these harsh and strange times. You apply to the grant and are excited to know that your proposal has been approved. -> scenarios
+    Due to the availability of a new project grant, your team and you are excited about this opportunity during these harsh and strange times. You apply to the grant and are excited to know that your proposal has been approved.* [Next] 
+    And we soldier on! One firefight to another: -> scenarios
 }
 
 
 = teammemberfallssick
-    ~fundsfororg=fundsfororg-10
-    ~sanity=sanity*0.8
-    ~ego=ego*0.8
-    ~health=health*0.7
-COVID {&has affected you personally, and you are out of action for 3 weeks.|has affected your organisation, your colleague has tested positive and is in isolation for 2 weeks. They cannot work for the next one month due to complications|has affected personally, and cannot work for the next month.} You pay a heavy price for this as there is limited bandwidth within the organisation. -> scenarios
+~fundsfororg=fundsfororg-10
+~sanity=sanity*0.8
+~ego=ego*0.8
+~health=health*0.7
+COVID {&has affected you personally, you have tested positive and you are out of action for 3 weeks.|has affected your organisation, your colleague has tested positive and is in isolation for 2 weeks. They cannot work for the next one month due to complications|has affected personally, and cannot work for the next month.} {org_name} pays a heavy price for this as there is limited bandwidth available from the team. * [Next] 
+And we soldier on! One firefight to another: -> scenarios
 
 = covidstoppage
-    ~fundsfororg=fundsfororg-10
-    ~sanity=sanity*0.8
-    ~ego=ego*0.8
-    Due to the raging pandemic, {&your fieldwork is suspended and you will have to wait for two months to begin work|your project deliverables have to be change and you need to negotiate with your funder|your project is suspended by the funder as they would like to prioritize COVID work|your partner organisation is in stress and cannot contribute to the project}. -> scenarios
+~fundsfororg=fundsfororg-10
+~sanity=sanity*0.8
+~ego=ego*0.8
+Due to the raging pandemic, {your fieldwork is suspended and you will have to wait for two months to begin work|your project deliverables have to be change and you need to negotiate with your funder|your project is suspended by the funder as they would like to prioritize COVID work|your partner organisation is in stress and cannot contribute to the project.} * [Next] 
+And we soldier on! One firefight to another: -> scenarios
 
 = extensiondenied
 ~ego=ego*0.9
 ~fundsfororg=fundsfororg-10
 ~sanity= sanity*0.8
-You and your team are working overtime to ensure the deliverables can be met and do justice to the COVID work. 
-* [Next] 
-Sure, lets try another -> scenarios
+You and your team are working overtime to ensure the deliverables can be met and do justice to the COVID work. * [Next] 
+And we soldier on! One firefight to another: -> scenarios
 
 = extentsionapproved
 ~ego=ego*1.1
@@ -304,27 +320,29 @@ Sure, lets try another -> scenarios
 ~sanity= sanity*1.1
 Since your funder understands the challenges that have resulted due to COVID all around, they extend your deadlines based on your request and ask you and your team to take care and be prepared for a long battle.
 *[Next]
-Sure, lets try another-> scenarios
+And we soldier on! One firefight to another: -> scenarios
 
 = foreignfunder
 {fcrastatus:
-- 1: Since you have the clearance from the Government of India, you can continue to carry out the COVID related work with this grant from otuside India.
-~fundsfororg=fundsfororg+10
-~sanity=sanity*1.1
-~ego=ego*1.1
-- 0: Since you do not have clearance to receive funding from outside India by the Government, you cannot carry out this work.
-~sanity=sanity*0.9
-~ego=ego*0.9
+- 1: 
+    Since you have the clearance from the Government of India, you can continue to carry out the COVID related work with this grant from outside India.
+    ~fundsfororg=fundsfororg+10
+    ~sanity=sanity*1.1
+    ~ego=ego*1.1
+- 0: 
+    Since you do not have clearance to receive funding from outside India by the Government, you cannot carry out this work.
+    ~sanity=sanity*0.9
+    ~ego=ego*0.9
 }
 * [Next] 
-Sure, lets try another-> scenarios
+And we soldier on! One firefight to another: -> scenarios
 
 = indianfunder
 ~fundsfororg=fundsfororg+10
 ~sanity=sanity+10
-Congratulations! You have received fundingg to continue the COVID related work from a {&philanthropic body.|an individual funder.}
+Congratulations! You have received funding to continue the COVID related work from a {&philanthropic body.|an individual funder.}
 * [Next] 
-Sure, lets try another-> scenarios
+And we soldier on! One firefight to another: -> scenarios
 
 === ending ===
 # CLEAR
